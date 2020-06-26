@@ -1,0 +1,133 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 90%;
+  font-size: 18px;
+}
+
+.middle-card {
+  width: 320px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+
+#tabButtons,
+.input-form,
+.input-div,
+.buttons {
+  width: 100%;
+}
+
+#tabButtons :nth-child(1) {
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+#tabButtons :nth-child(2) {
+  border-left: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+#tabButtons .active {
+  background-color: white;
+  font-weight: bold;
+  border: none;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.tabButton {
+  height: 100%;
+  padding: 10px 0px;
+  cursor: pointer;
+  width: 50%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tabContent {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-div {
+  display: flex;
+  padding: 0px 8px;
+  align-items: center;
+  outline: none;
+  border-radius: 3px;
+  border: thin solid rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  background-color: rgb(232, 232, 232);
+}
+
+.input-div input {
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  border: 0;
+  background-color: inherit;
+}
+
+.input-div input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+.input-div i {
+  color: gray;
+  font-size: 14px;
+}
+
+.input-form > * {
+  margin: 16px 0px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  cursor: pointer;
+  background-color: #008ae6;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.forget-btn {
+  padding: 0;
+  color: #008ae6;
+  background-color: inherit;
+}
+
+.right-btn {
+  margin-left: auto;
+}
+
+.input-form :focus-within {
+  box-shadow: 0px 0px 8px #008ae6;
+  border-color: #008ae6;
+}
+
+.input-form :focus-within > i {
+  color: #008ae6;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+}
