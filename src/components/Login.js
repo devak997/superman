@@ -1,48 +1,45 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addUser } from "../../api";
+import { authenticateUser } from "../api";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
+import { setAuthedUser } from "../actions/auth";
 
-const Signup = ({ dispatch }) => {
-  const [formState, setFormState] = useState({
-    userid: "",
-    email: "",
-    password: "",
-  });
-
-  const handleUserIdChange = (e) => {
-    setFormState({ ...formState, userid: e.target.value });
-  };
+const Login = ({ dispatch, history }) => {
+  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleEmailChange = (e) => {
     setFormState({ ...formState, email: e.target.value });
+    setErrorMsg("");
   };
 
   const handlePasswordChange = (e) => {
     setFormState({ ...formState, password: e.target.value });
+    setErrorMsg("");
   };
 
   const onSubmit = () => {
     dispatch(showLoading());
-    addUser(formState.userid, formState.email, formState.password).then(
-      (res) => {
+    authenticateUser(formState.email, formState.password)
+      .then((res) => {
+        if (!res.data.authenticated) {
+          setErrorMsg(res.data.message);
+        } else {
+          dispatch(setAuthedUser(res.data.id));
+          history.push("/");
+        }
         dispatch(hideLoading());
-      }
-    );
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMsg(err.response.data.message);
+        dispatch(hideLoading());
+      });
   };
 
   return (
     <React.Fragment>
       <div className="input-form">
-        <div className="input-div">
-          <i className="fa fa-user" aria-hidden="true"></i>
-          <input
-            type="text"
-            placeholder="User Id"
-            value={formState.userid}
-            onChange={handleUserIdChange}
-          />
-        </div>
         <div className="input-div">
           <i className="fa fa-envelope" aria-hidden="true"></i>
           <input
@@ -62,9 +59,15 @@ const Signup = ({ dispatch }) => {
           />
         </div>
       </div>
-      <button onClick={onSubmit} className="btn right-btn" >Create Account</button>
+      <div className="error-message">{errorMsg}</div>
+      <div className="buttons">
+        <button className="btn forget-btn">Forgot Password?</button>
+        <button className="btn" onClick={onSubmit}>
+          Log In
+        </button>
+      </div>
     </React.Fragment>
   );
 };
 
-export default connect()(Signup);
+export default connect()(Login);
