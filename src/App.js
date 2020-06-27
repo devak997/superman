@@ -1,37 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Route, Redirect, Switch } from "react-router-dom";
+import LoadingBar from "react-redux-loading-bar";
+
 import Navbar from "./components/Navbar";
 import SignupLogin from "./components/SignupLogin";
-import LoadingBar from "react-redux-loading-bar";
 import Home from "./components/Home";
-import { Route, Redirect, Switch } from "react-router-dom";
 import About from "./components/About";
 import Profile from "./components/Profile";
+import PrivateRoute from "./components/PrivateRoute";
 
-const App = ({ authedUser }) => {
+const App = () => {
   return (
     <React.Fragment>
       <Navbar />
       <LoadingBar />
-      {authedUser == null ? (
-        <Switch>
-          <Route path="/" exact component={() => <Redirect to="/login" />} />
-          <Route path="/login"  component={SignupLogin} />
-          <Route path="/about" component={About} />
-        </Switch>
-      ) : (
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/profile" component={Profile} />
-        </Switch>
-      )}
+      <Switch>
+        <Route path="/login" component={SignupLogin} />
+        <Route path="/about" component={About} />
+        <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/about" component={About} />
+        <PrivateRoute path="/profile" component={Profile} />
+      </Switch>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = ({ authedUser }) => {
-  return { authedUser };
-};
 
-export default connect(mapStateToProps)(App);
+export default App;
